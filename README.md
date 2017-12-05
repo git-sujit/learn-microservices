@@ -23,3 +23,4 @@ HATEOS: Hypermedia as The Engine of Application State
 	- e.g: returning additional/useful information/links in the response
 	- Add spring-boot-starter-hateoas dependency in the POM
 	- Note: ControllerLinkBuilder and Resource classes on hateoas
+	- Not very well used in applications but good to know
