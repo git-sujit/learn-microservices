@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.sks.learn.learnspringbootudemy.exception.UserAlreadyExistsException;
+import com.sks.learn.learnspringbootudemy.exception.AlreadyExistsException;
 import com.sks.learn.learnspringbootudemy.model.UserBean;
 
 @Component
@@ -31,10 +31,14 @@ public class UserDao {
 			user.setId(++userCount);
 		}
 		if (userList.stream().filter(t -> t.getId() == user.getId()).findFirst().isPresent()) {
-			throw new UserAlreadyExistsException("User [" + user.getId() + "] already exists");
+			throw new AlreadyExistsException("User [" + user.getId() + "] already exists");
 		}
 		userList.add(user);
 		return user;
+	}
+
+	public void deleteUser(int id) {
+		userList.remove(userList.stream().filter(t -> t.getId() == id).findFirst().get());
 	}
 
 }

@@ -2,6 +2,7 @@ package com.sks.learn.learnspringbootudemy.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import com.sks.learn.learnspringbootudemy.model.UserPostsBean;
 
 @Component
 public class UserPostsDao {
-	private List<UserPostsBean> userPostList = new ArrayList<UserPostsBean>();
+	private static List<UserPostsBean> userPostList = new ArrayList<UserPostsBean>();
 
 	@Autowired
 	private UserDao userDao;
@@ -28,8 +29,12 @@ public class UserPostsDao {
 	public List<UserPostsBean> findAll() {
 		return userPostList;
 	}
-	
+
+	public UserPostsBean postDetails(int postsId) {
+		return userPostList.stream().filter(t -> t.getPostsId() == postsId).findFirst().get();
+	}
+
 	public List<UserPostsBean> findUserPosts(int userId) {
-		return null;//userPostList.stream().allMatch(t -> t.getUserId() == userId);
+		return userPostList.stream().filter(t -> t.getUserId() == userId).collect(Collectors.toList());
 	}
 }

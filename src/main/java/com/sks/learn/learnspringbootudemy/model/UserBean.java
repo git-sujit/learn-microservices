@@ -3,10 +3,19 @@ package com.sks.learn.learnspringbootudemy.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 public class UserBean {
+	
 	private int id;
+	
+	@Size(min=2, message="Name should have at least 2 chars")
 	private String name;
+	
+	@Past(message="Date of birth must be in past")
 	private Date dob;
+	
 	private List<UserPostsBean> postsList;
 
 	public UserBean() {

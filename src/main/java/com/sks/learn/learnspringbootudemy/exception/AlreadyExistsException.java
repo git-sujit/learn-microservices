@@ -1,17 +1,17 @@
 package com.sks.learn.learnspringbootudemy.exception;
 
-public class UserAlreadyExistsException extends RuntimeException {
+public class AlreadyExistsException extends RuntimeException {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String message;
 
-	public UserAlreadyExistsException() {
+	public AlreadyExistsException() {
 		super();
 	}
 
-	public UserAlreadyExistsException(String message) {
+	public AlreadyExistsException(String message) {
 		super();
 		this.message = message;
 	}
