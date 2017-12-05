@@ -39,6 +39,26 @@ Internationalization
 
 	- LocaleResolver: To set default locale 
 	- ResourceBundleMessageSource: To set up the messageSource(.properties files)
-	- 
-	- 
+
+Content Negotiation
+	
+	- Determining the content in the response: JSON or XML
+	- To avoid HTTP_RESPONSE_CODE=406: Not Acceptable
+	- Jackson2Object is used for Json to Object conversion and vice versa
+	- jackson-dataformat-xml for XML to object conversion and vice versa
+	- Request Header: Accept: application/xml
+	
+Swagger Documentation
+	
+	- To share the RESTFul services with consumer
+	- To generate SOAP-WSDLS like documentation about the RESTFul services
+	- POM dependency for swagger: springfox-swagger2 and swaggerUI
+	- Details/Documentation about RESTFul services
+		- Thru REST API: http://localhost:8080/v2/api-docs
+		- Thru UI: http://localhost:8080/swagger-ui.html
+	- ApiModel & ApiModelProperty to add description at bean-property level in Swagger documentation
+	
+	
+
+
 	

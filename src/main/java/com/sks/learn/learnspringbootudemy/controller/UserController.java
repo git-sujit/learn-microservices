@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.sks.learn.learnspringbootudemy.dao.UserDao;
 import com.sks.learn.learnspringbootudemy.exception.NotFoundException;
 import com.sks.learn.learnspringbootudemy.model.UserBean;
+import com.sks.learn.learnspringbootudemy.util.LMSConstants;
 
 @RestController
 public class UserController {
@@ -30,30 +31,30 @@ public class UserController {
 
 	@GetMapping("/users")
 	public List<UserBean> allUsers() {
-		System.out.println("Getting all users");
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Getting all users");
 		return userDao.findAll();
 	}
 
 	@GetMapping("/users/{id}")
 	public Resource<UserBean> oneUser(@PathVariable int id) {
-		System.out.println("Getting user details for: " + id);
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Getting user details for: " + id);
 		UserBean user = null;
 		try {
 			user = userDao.findOne(id);
 		} catch (NoSuchElementException e) {
 			throw new NotFoundException("User with id-" + id + ": NOT FOUND");
 		}
-		
-		Resource<UserBean> resource = new Resource<UserBean>(user); 
+
+		Resource<UserBean> resource = new Resource<UserBean>(user);
 		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).allUsers());
-		
+
 		resource.add(linkTo.withRel("all-users"));
 		return resource;
 	}
 
 	@PostMapping("/users")
 	public ResponseEntity<Object> createUser(@Valid @RequestBody UserBean user) throws Exception {
-		System.out.println("Creating user");
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Creating user");
 		UserBean createdUser = userDao.save(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(createdUser.getId()).toUri();
@@ -63,7 +64,7 @@ public class UserController {
 
 	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable int id) {
-		System.out.println("Deleting user: " + id);
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Deleting user: " + id);
 		try {
 			userDao.deleteUser(id);
 		} catch (NoSuchElementException e) {

@@ -6,16 +6,22 @@ import java.util.List;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "All details about user")
 public class UserBean {
-	
+
 	private int id;
-	
-	@Size(min=2, message="Name should have at least 2 chars")
+
+	@Size(min = 2, message = "Name should have at least 2 chars")
+	@ApiModelProperty(notes = "Name should have at least 2 chars")
 	private String name;
-	
-	@Past(message="Date of birth must be in past")
+
+	@Past(message = "Date of birth must be in past")
+	@ApiModelProperty(notes = "Date of birth must be in past")
 	private Date dob;
-	
+
 	private List<UserPostsBean> postsList;
 
 	public UserBean() {

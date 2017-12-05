@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.sks.learn.learnspringbootudemy.util.LMSConstants;
+
 @ControllerAdvice
 @RestController
 public class CustomResponseEntityExceptionHanlder extends ResponseEntityExceptionHandler {
@@ -38,7 +40,8 @@ public class CustomResponseEntityExceptionHanlder extends ResponseEntityExceptio
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		System.out.println("Request Validation Failed:: Method Argumanet is not valid");
+		System.out.println(
+				LMSConstants.CUSTOM_LOG_IDENTIFIER + "Request Validation Failed:: Method Argumanet is not valid");
 		ExceptionResponse exResp = new ExceptionResponse(new Date(), ex.getMessage(), ex.getBindingResult().toString());
 		return new ResponseEntity(exResp, HttpStatus.NOT_FOUND);
 	}

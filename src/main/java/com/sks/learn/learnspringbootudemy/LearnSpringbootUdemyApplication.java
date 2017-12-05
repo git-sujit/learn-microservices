@@ -9,11 +9,13 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import com.sks.learn.learnspringbootudemy.util.LMSConstants;
+
 @SpringBootApplication
 public class LearnSpringbootUdemyApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Launching spring boot application");
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Launching spring boot application");
 		SpringApplication.run(LearnSpringbootUdemyApplication.class, args);
 	}
 
@@ -24,27 +26,27 @@ public class LearnSpringbootUdemyApplication {
 	 */
 	@Bean
 	public LocaleResolver localeResolver() {
-		System.out.println("###################Setting default locale");
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Setting default locale");
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 		localeResolver.setDefaultLocale(Locale.US);
 		return localeResolver;
 	}
 
 	/**
-	 * To setup message source base file name
-	 * messageSource is defined in HelloWorldController
-	 * Make sure names are same
+	 * To setup message source base file name messageSource is defined in
+	 * HelloWorldController Make sure names are same
+	 * 
 	 * @return
 	 */
-	@Bean(name="messageSource")
+	@Bean(name = "messageSource")
 	public ResourceBundleMessageSource bundleMessageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
-		System.out.println("###################Print message(English) : "
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Print message(English) : "
 				+ messageSource.getMessage("good.morning.message", null, Locale.US));
-		System.out.println("###################Print message(French) : "
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Print message(French) : "
 				+ messageSource.getMessage("good.morning.message", null, Locale.FRANCE));
-		System.out.println("###################Print message(Default) : "
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Print message(Default) : "
 				+ messageSource.getMessage("good.morning.message", null, null));
 		return messageSource;
 
