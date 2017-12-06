@@ -63,7 +63,42 @@ Monitoring by Spring Actuator
 	- Hal browser: To look monitoring provided by actuator in browser
 	- HAL: Hypertext Application Language
 	- localhost:8080/application or http://localhost:8080/actuator	
+Filtering
+	
+	- To filter attributes in the response like card number / password
+	Static Filtering:
+		- Field is ignored across all the response/bean
+		- Annotation at Bean level
+			- @JsonIgnore at bean-field level: Better approach
+			- @JsonIgnoreProperties: At bean class level
+	Dynamic Filtering:
+		- Response specific bean-field ignorance
+		- Annotation at RestController level. Classes used
+			- FilterProvider
+			- MappingJacksonValue
+Version of RESTful services: No perfect solution
+	
+	- URI Versioning: Different URI for different version(URI Pollution)
+		- localhost:8080/v1/customer 
+		- localhost:8080/v2/customer
+		- Twitter
+	- Request Parameter versioning: Same URI but request param has different versions(URI Pollution)
+		- http://localhost:8080/customer?version=1
+		- http://localhost:8080/customer?version=2
+		- Amazon
+	- Custom Header versioning (Caching is difficult / Cant run on browser / Misuse of headers)
+		- Add header parameter: SKS_SVC_VERSION=1.0.0
+		- Microsoft
+	- Mime Type Versioning, Accept header or Produces versioning(Caching is difficult / Cant run on browser / Misuse of headers)
+		- Add header parameter: Accept=abndb
+		- Github
 		
+
+		
+
+		
+	
+	
 	
 
 

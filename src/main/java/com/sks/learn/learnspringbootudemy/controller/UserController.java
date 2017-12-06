@@ -11,6 +11,7 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.sks.learn.learnspringbootudemy.dao.UserDao;
 import com.sks.learn.learnspringbootudemy.exception.NotFoundException;
 import com.sks.learn.learnspringbootudemy.model.UserBean;
@@ -30,9 +34,17 @@ public class UserController {
 	private UserDao userDao;
 
 	@GetMapping("/users")
-	public List<UserBean> allUsers() {
-		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Getting all users");
-		return userDao.findAll();
+	public MappingJacksonValue allUsers() {
+		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Getting all users, filtering post list");
+		// Dynamic filtering
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "dob");
+		FilterProvider fp = new SimpleFilterProvider().addFilter("UserBeanFilter", filter);
+		List<UserBean> userList = userDao.findAll();
+
+		MappingJacksonValue mjv = new MappingJacksonValue(userList);
+		mjv.setFilters(fp);
+
+		return mjv;
 	}
 
 	@GetMapping("/users/{id}")

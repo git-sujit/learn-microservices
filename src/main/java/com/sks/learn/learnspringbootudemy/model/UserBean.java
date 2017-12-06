@@ -6,9 +6,12 @@ import java.util.List;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@JsonFilter("UserBeanFilter")
 @ApiModel(description = "All details about user")
 public class UserBean {
 
