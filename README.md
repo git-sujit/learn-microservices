@@ -40,7 +40,7 @@ Internationalization
 	- LocaleResolver: To set default locale 
 	- ResourceBundleMessageSource: To set up the messageSource(.properties files)
 
-Content Negotiation
+Content Negotiation(Json, XML etc)
 	
 	- Determining the content in the response: JSON or XML
 	- To avoid HTTP_RESPONSE_CODE=406: Not Acceptable
@@ -57,7 +57,13 @@ Swagger Documentation
 		- Thru REST API: http://localhost:8080/v2/api-docs
 		- Thru UI: http://localhost:8080/swagger-ui.html
 	- ApiModel & ApiModelProperty to add description at bean-property level in Swagger documentation
+Monitoring by Spring Actuator
 	
+	- Spring actuator provides monitoring of RESTful web services
+	- Hal browser: To look monitoring provided by actuator in browser
+	- HAL: Hypertext Application Language
+	- localhost:8080/application or http://localhost:8080/actuator	
+		
 	
 
 
