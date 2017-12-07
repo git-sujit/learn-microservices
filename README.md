@@ -104,7 +104,28 @@ Secure RESTFul Web Services
 		- configure user in application.properties file
 			- security.user.name
 			- security.user.password
+JPA
 
+	- To make a bean as entity: Add @Entity annotation
+	- Spring autoconfiguration creates the Table based on annotation
+	- Pom dependency
+		- spring-boot-starter-data-jpa
+		- In memory db: H2
+	- Using javax.persistence.*
+	- application.properties
+		- spring.jpa.show-sql=true
+		- spring.h2.console.enabled=true
+	- To insert data to table: create data.sql file in src/main/resources
+	- To access H2 console
+		- Set property: spring.h2.console.enabled=true
+		- http://localhost:8080/h2-console
+			- In console set [JDBC URL jdbc:h2:mem:testdb]
+	- Getting data from database
+		- Create interface which extends JpaRepository: Put @Repository
+		- Inject this repository into the controller
+		- Call methods on the repository like, findAll() etc
+		- Spring autoconfiguration gets the correct class, creates object and calls findAll() method
+	- 
 			
 
 		

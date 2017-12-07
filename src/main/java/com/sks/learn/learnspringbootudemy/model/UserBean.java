@@ -3,6 +3,10 @@ package com.sks.learn.learnspringbootudemy.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -13,11 +17,13 @@ import io.swagger.annotations.ApiModelProperty;
 
 @JsonFilter("UserBeanFilter")
 @ApiModel(description = "All details about user")
+@Entity
 public class UserBean {
-
+	@Id
+	@GeneratedValue
 	private int id;
 
-	@Size(min = 2, message = "Name should have at least 2 chars")
+	@Size(min = 2, message = "Name should have at least 2 chars.")
 	@ApiModelProperty(notes = "Name should have at least 2 chars")
 	private String name;
 
@@ -25,6 +31,7 @@ public class UserBean {
 	@ApiModelProperty(notes = "Date of birth must be in past")
 	private Date dob;
 
+	@Transient
 	private List<UserPostsBean> postsList;
 
 	public UserBean() {
