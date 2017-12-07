@@ -92,7 +92,20 @@ Version of RESTful services: No perfect solution
 	- Mime Type Versioning, Accept header or Produces versioning(Caching is difficult / Cant run on browser / Misuse of headers)
 		- Add header parameter: Accept=abndb
 		- Github
-		
+Secure RESTFul Web Services
+
+	- Types of authentication
+		- Basic authentication: Passing User Id/Pwd
+		- Digest authentication: Digest is created out of id/pwd and passed
+		- OAuth / OAuth 2
+	- How to turn on authentication in spring application
+		- add dependecy in pom: spring-boot-starter-security
+		- default user is user and password is in start up log
+		- configure user in application.properties file
+			- security.user.name
+			- security.user.password
+
+			
 
 		
 
