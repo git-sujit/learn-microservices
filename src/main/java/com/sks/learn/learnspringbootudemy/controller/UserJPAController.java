@@ -5,7 +5,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.net.URI;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -26,9 +25,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.sks.learn.learnspringbootudemy.dao.UserPostsRepository;
 import com.sks.learn.learnspringbootudemy.dao.UserRepository;
 import com.sks.learn.learnspringbootudemy.exception.NotFoundException;
 import com.sks.learn.learnspringbootudemy.model.UserBean;
+import com.sks.learn.learnspringbootudemy.model.UserPostsBean;
 import com.sks.learn.learnspringbootudemy.util.LMSConstants;
 
 @RestController
@@ -36,6 +37,9 @@ public class UserJPAController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserPostsRepository userPostRepository;
 
 	@GetMapping("/jpa/users")
 	public MappingJacksonValue allUsers() {
@@ -81,11 +85,35 @@ public class UserJPAController {
 	@DeleteMapping("/jpa/users/{id}")
 	public void deleteUser(@PathVariable int id) {
 		System.out.println(LMSConstants.CUSTOM_LOG_IDENTIFIER + "Deleting user in Database: " + id);
-		try {
-			userRepository.deleteById(id);
-		} catch (NoSuchElementException e) {
-			throw new NotFoundException("User with id-" + id + ": NOT FOUND IN DB");
-		}
+		userRepository.deleteById(id);
 	}
 
+	/**
+	 * USER POSTS
+	 */
+	@GetMapping("/jpa/users/{id}/posts")
+	public List<UserPostsBean> retrieveUsePosts(@PathVariable int id) {
+		Optional<UserBean> userOptional = userRepository.findById(id);
+		if (!userOptional.isPresent()) {
+			throw new NotFoundException("User with id-" + id + ": NOT FOUND IN DB");
+		}
+		return userOptional.get().getPostsList();
+
+	}
+
+	@PostMapping("/jpa/users/{id}/posts")
+	public ResponseEntity<Object> createUsePosts(@PathVariable int id, @RequestBody UserPostsBean postsBean) {
+		Optional<UserBean> userOptional = userRepository.findById(id);
+		if (!userOptional.isPresent()) {
+			throw new NotFoundException("User with id-" + id + ": NOT FOUND IN DB");
+		}
+		postsBean.setUser(userOptional.get());
+
+		userPostRepository.save(postsBean);
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(postsBean.getPostsId()).toUri();
+
+		return ResponseEntity.created(location).build();
+	}
 }

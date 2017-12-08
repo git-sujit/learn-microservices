@@ -17,10 +17,10 @@ public class UserPostsDao {
 	private UserDao userDao;
 
 	public UserPostsBean save(UserPostsBean userPosts) {
-		if (userDao.findAll().stream().filter(t -> t.getId() == userPosts.getUserId()).findFirst().isPresent()) {
+		if (userDao.findAll().stream().filter(t -> t.getId() == userPosts.getUser().getId()).findFirst().isPresent()) {
 			userPostList.add(userPosts);
-			userDao.findAll().stream().filter(t -> t.getId() == userPosts.getUserId()).findFirst().get().getPostsList()
-					.add(userPosts);
+			userDao.findAll().stream().filter(t -> t.getId() == userPosts.getUser().getId()).findFirst().get()
+					.getPostsList().add(userPosts);
 		}
 
 		return userPosts;
@@ -35,6 +35,6 @@ public class UserPostsDao {
 	}
 
 	public List<UserPostsBean> findUserPosts(int userId) {
-		return userPostList.stream().filter(t -> t.getUserId() == userId).collect(Collectors.toList());
+		return userPostList.stream().filter(t -> t.getUser().getId() == userId).collect(Collectors.toList());
 	}
 }

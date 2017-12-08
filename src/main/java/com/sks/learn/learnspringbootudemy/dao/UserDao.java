@@ -14,8 +14,8 @@ public class UserDao {
 	private static List<UserBean> userList = new ArrayList<UserBean>();
 	private static int userCount = 2;
 	static {
-		userList.add(new UserBean(1, "Ram", new Date(), null));
-		userList.add(new UserBean(2, "Shyam", new Date(), null));
+		userList.add(new UserBean(10001, "Ram", new Date(), null));
+		userList.add(new UserBean(10002, "Shyam", new Date(), null));
 	}
 
 	public List<UserBean> findAll() {

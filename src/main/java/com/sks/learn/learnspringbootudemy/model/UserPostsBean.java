@@ -1,27 +1,34 @@
 package com.sks.learn.learnspringbootudemy.model;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
 public class UserPostsBean {
-	private int userId;
+	@Id
+	@GeneratedValue
 	private int postsId;
+
 	private String postsMessage;
 
-	public UserPostsBean(int userId, int postsId, String postsMessage) {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private UserBean user;
+
+	public UserPostsBean(UserBean user, int postsId, String postsMessage) {
 		super();
-		this.userId = userId;
 		this.postsId = postsId;
 		this.postsMessage = postsMessage;
+		this.user = user;
 	}
 
 	public UserPostsBean() {
 		super();
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
 	}
 
 	public int getPostsId() {
@@ -38,6 +45,14 @@ public class UserPostsBean {
 
 	public void setPostsMessage(String postsMessage) {
 		this.postsMessage = postsMessage;
+	}
+
+	public UserBean getUser() {
+		return user;
+	}
+
+	public void setUser(UserBean user) {
+		this.user = user;
 	}
 
 }

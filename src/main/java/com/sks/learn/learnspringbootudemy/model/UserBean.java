@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -31,7 +31,7 @@ public class UserBean {
 	@ApiModelProperty(notes = "Date of birth must be in past")
 	private Date dob;
 
-	@Transient
+	@OneToMany(mappedBy = "user")
 	private List<UserPostsBean> postsList;
 
 	public UserBean() {
