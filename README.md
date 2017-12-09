@@ -6,20 +6,22 @@ Setup Spring Boot Starter project
 	- web, DevTools, JPA, H2
 Spring Boot Auto configuration:
 
-	- DispatcherServletAutoConfiguration: Configures spring's disapatcher servlet
+	- DispatcherServletAutoConfiguration: Configures spring's dispatcher servlet
 	- ErrorMVCAutoConfiguration: Configures basic error page/whitelable error page
 	- HttpMessageConverterAutoConfiguration: Jackson2ObjectMapper does json to bean and bean to json
-	- Puts Spring MVC in classpath so that Dispatcher servlet is available
+	- Spring Boots Puts Spring MVC in classpath so that Dispatcher servlet is available
 	- Dispatcher servlet follows the front controller design pattern
 	-
 Steps:
 
 	- Dispatcher Servlet routes the request based on 
-		- Dispatcher servlet knows about all the controllers and URI mapping
 		- HTTP Method and URI
+		- Dispatcher servlet knows about all the controllers and URI mapping
 	- @RESTController has methods which maps to URI
+		- @PathVariable: To get variable from URI
+		- @RequestBody: To get http request body
 		- @ResponseBody which converts the output to Response
-	- Methods return Objects/Beans which is convertes back to JSON by Jackson(Spring Boot auto config)
+	- Methods return Objects/Beans which is converts back to JSON by Jackson(Spring Boot auto config)
 	- ResponseEntityExceptionHandler
 		- Define methods and type of exceptions to be handled
 		- Define ExceptionResponse
@@ -125,7 +127,43 @@ JPA
 		- Inject this repository into the controller
 		- Call methods on the repository like, findAll() etc
 		- Spring autoconfiguration gets the correct class, creates object and calls findAll() method
-	- 
+
+# MICROSERVICES / Architectural Style
+What is Microservices
+
+	- REST based Small autonomous services that work together
+	- Architectural style to develop single application as suite of small services
+	- Each service is deployed independently as one or more instance depending on load
+	- Each service runs in its own process
+	- Should be cloud enabled
+Challenges with Microservices
+	
+	- How to identify boundary(what to do in this service) of a service, Generally evolves
+	- Configuration management: Multiple instance of microservice with multiple environment(DevOps)
+	- Dynamic scale up and scale down depending upon load. Dynamic load balancing(DevOps)
+	- Visibility: Multiple microservices so logging and monitoring is require to identify problem
+	- Pack of Card: Services are build one top of other, so if fails depending services will fail to(Fault Tolerance)
+Spring Cloud
+
+	- Provides solution to above challenges of microservices
+	- 	
+Advantages of Microservices Architecture
+
+	- Easy to adapt new technology which is difficult in Monolith
+		- MS-1: Java, MS-2: .net, MS-3: Cotlin, MS-4: future technology
+	- Dynamic scaling: Cloud enabled microservices can be scale up or down depending upon the load
+	- Faster release cycle: Continuous deployment
+Spring Cloud Config Server
+
+	- Put configs in git and spring cloud config takes from there
+	- Dependency: spring-cloud-config-client
+	
+		
+	
+	
+	
+	
+
 			
 
 		
