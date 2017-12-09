@@ -157,6 +157,8 @@ Spring Cloud Config Server
 
 	- Put configs in git and spring cloud config takes from there
 	- Dependency: spring-cloud-config-client
+	- We need to download the git
+	- 
 	
 		
 	
