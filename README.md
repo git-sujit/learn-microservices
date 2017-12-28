@@ -156,9 +156,21 @@ Advantages of Microservices Architecture
 Spring Cloud Config Server
 
 	- Put configs in git and spring cloud config takes from there
-	- Dependency: spring-cloud-config-client
-	- We need to download the git
-	- 
+	- spring-cloud-config-server
+		- @EnableConfigServer on SpringBootApplication for config-server
+		- application.properties
+			- spring.cloud.config.server.git.uri=https://chaay-sujit@bitbucket.org/chaaynation/cn-configs.git
+			- spring.cloud.config.server.git.username=cn-test-user
+			- spring.cloud.config.server.git.password=Login123
+		- Link Source:  To the folder where git repository is cloned 
+		- Name of properties file in the Git MUST be same as the spring-cloud-config-client application-name
+	- spring-cloud-config-client
+		- @EnableDiscoveryClient on SpringBootApplication for config-client
+		- Class for corresponding properties
+			- @Component
+			- @ConfigurationProperties("cn-test"): Must be same name as git-properties file / client-application-name
+			- Class should have exactly the same instance variable as in the git-properties file
+			
 	
 		
 	
