@@ -1,5 +1,6 @@
 # PART-1:Restful Web Services with Spring Boot
 # Basic Topics
+
 Setup Spring Boot Starter project
 
 	- https://start.spring.io/
@@ -129,6 +130,7 @@ JPA
 		- Spring autoconfiguration gets the correct class, creates object and calls findAll() method
 
 # MICROSERVICES / Architectural Style
+
 What is Microservices
 
 	- REST based Small autonomous services that work together
@@ -136,6 +138,7 @@ What is Microservices
 	- Each service is deployed independently as one or more instance depending on load
 	- Each service runs in its own process
 	- Should be cloud enabled
+
 Challenges with Microservices
 	
 	- How to identify boundary(what to do in this service) of a service, Generally evolves
@@ -143,10 +146,25 @@ Challenges with Microservices
 	- Dynamic scale up and scale down depending upon load. Dynamic load balancing(DevOps)
 	- Visibility: Multiple microservices so logging and monitoring is require to identify problem
 	- Pack of Card: Services are build one top of other, so if fails depending services will fail to(Fault Tolerance)
+Common Feature of Microservices:
+	
+	- Small components
+	- Independent deployment
+	- Simple Communication between these microservices (RESTful services over HTTP)
+	- Stateless
+	- Dynamic scale up and scale down
+	- Automated Build, Deployment and Testing
+	- Refer:
+		- https://martinfowler.com/articles/microservices.html
+		- https://12factor.net/
+		- https://dzone.com/articles/the-12-factor-app-a-java-developers-perspective
+	
+
 Spring Cloud
 
 	- Provides solution to above challenges of microservices
 	- 	
+
 Advantages of Microservices Architecture
 
 	- Easy to adapt new technology which is difficult in Monolith
@@ -185,8 +203,15 @@ Netflix-Feign: Makes easy to invoke other REST services
 
 Netflix-Eureka: Service Registry & Discovery
 
-	- 
-	
+	- Eureka Naming Server
+		- New Spring Boot Application having Eureka-Naming-Server dependency
+		- @EnableEurekaServer
+	- Eureka Naming Client
+		- Add Eureka-Naming-client dependency to microservice you want to register with Eureka-server
+		- @EnableDiscoveryClient: Add this annotation to SpringBootApplication class
+		- application.properties: Add eureka server End Point
+			- eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
 Netflix-Ribbon (Works with Feign): Makes easy to invoke other REST services
 
 	- Add spring cloud dependency for netflix-ribbon to pom.xml
@@ -195,22 +220,69 @@ Netflix-Ribbon (Works with Feign): Makes easy to invoke other REST services
 		- eureka.client.service-url.default-zone=http://localhost:8761/eureka
 
 Netflix-Zuul: API Gateway Server
-	- 
+
+	- Why API Gateway
+		- Provides Common features (Auth/Sec etc) for all microservices will be implemented at API Gateway
+		- Fault Tolerance: If a microservice is down then some default begavior should kick-in
+		- Service aggregation: aggregate multiple service and give one response instead of making multiple calls
+	- Zuul Server set up
+		- Add zuul API dependency to Spring boot application
+		- @EnableZuulProxy: Put on spring boot application class
+		- Intercept request and implement "What it should do"
+			- New Class that extends ZuulFilter (Implement abstract methods)
+			- Implement run() method, it will have logic
+	- Zuul Client set up: No coding, just route it thru API Gateway by changing the end point URI
+		- Microservice end point will have Zuul server end point
+		- zuul-api server/{application-name}/uri
+		- localhost:8003/cn-test/config (cn-test is registered with eureka naming server)
+
+Distributed Tracing(Spring clound Sleuth with Zipkin)
+
+	- Spring Cloud Sleuth: Assigns unique id to request so that request can be traced goes thru multiple microservices
+	- Zipkin: Distributed tracing system
+	- All logs will be put into Rabbit MQ 
+	- These Rabbiut MQ logs will be sent to Zipkin
+	
+	
+Spring Cloud Sleuth
+
+	- Add spring cloud dependency for Sleuth to pom.xml
+	- Goto SpringBootApplication class
+		- create method defaultSampler() method
 		
+Centralize The Log: 
+
+	- Zipkin/Rabbit MQ
+	- ELK/Kafka Appender
+
+Spring Cloud Bus
+
+	- Why:
+		- Spring cloud config refers to properties files present in GIT repository
+		- If properties file is changed to new value then it will not reflect automatically
+		- Invoke actuator endpoiont to reflect the changes: localhost:8080/application/refresh
+		- This needs to be run for all microservices pointing to this properties file
+		- Spring cloud bus: Provides one url which refreshes all the instances of microserevices
+	- Spring cloud is used with 
+		- RabbitMQ or
+		- Kafka
 		
-	
-	
-	
-	
+Hystrix: Fault Tolerance(What if some functionality is not working as expected, then have some default behavior)
 
-			
+	- In microservices architecture there are many many mi croservices which interact with each other
+	- If one service is down then it can bring other services down as well
+	- So, we need to make our microservices fault tolerant
+	- Hystrix helps building Fault Tolerent microservices
+	- @EnableHystrix: put on springboot application
+	- @HystrixCommand(fallbackMethod = "fallbackRetrieveConfig"): Put on method/Service endpoint
 
+Distributed Logging Architecture for Microservices
+
+	- https://dzone.com/articles/distributed-logging-architecture-for-microservices
+	- Why
+		- microservices run on multiple hosts
+		- To fulfill single business requirement it may talk to multiple services running on different machines
+		- So, we should send all the generated logs across the hosts to an external, centralized place (Kafka/RabbitMQ)
+	- Correlation ID: generate unique id and pass across all the microservices invoked for single request
+		- Spring cloud Sleuth
 		
-
-		
-	
-	
-	
-
-
-	
