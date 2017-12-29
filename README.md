@@ -153,10 +153,12 @@ Advantages of Microservices Architecture
 		- MS-1: Java, MS-2: .net, MS-3: Cotlin, MS-4: future technology
 	- Dynamic scaling: Cloud enabled microservices can be scale up or down depending upon the load
 	- Faster release cycle: Continuous deployment
+
 Spring Cloud Config Server
 
 	- Put configs in git and spring cloud config takes from there
 	- spring-cloud-config-server
+		- Add spring-cloud-config-server dependency to pom.xml
 		- @EnableConfigServer on SpringBootApplication for config-server
 		- application.properties
 			- spring.cloud.config.server.git.uri=https://chaay-sujit@bitbucket.org/chaaynation/cn-configs.git
@@ -165,13 +167,36 @@ Spring Cloud Config Server
 		- Link Source:  To the folder where git repository is cloned 
 		- Name of properties file in the Git MUST be same as the spring-cloud-config-client application-name
 	- spring-cloud-config-client
-		- @EnableDiscoveryClient on SpringBootApplication for config-client
+		- Add spring-cloud-config-client dependency to pom.xml
+		- bootstrap.properties
+			- spring.cloud.config.uri=http://localhost:8888
+			- spring.profiles.active=qa
 		- Class for corresponding properties
 			- @Component
 			- @ConfigurationProperties("cn-test"): Must be same name as git-properties file / client-application-name
 			- Class should have exactly the same instance variable as in the git-properties file
 			
+Netflix-Feign: Makes easy to invoke other REST services
+
+	- Add spring cloud dependency for netflix-feign to pom.xml
+	- @EnableFeignClients on spring boot application. Pass package to scan by feign
+	- @Feign-Client("spring-boot-app-name"): Create Feign-Proxy for service to invoke outer service (Similar to JPA-Repository)
+	- Use proxy to invoke outer service
+
+Netflix-Eureka: Service Registry & Discovery
+
+	- 
 	
+Netflix-Ribbon (Works with Feign): Makes easy to invoke other REST services
+
+	- Add spring cloud dependency for netflix-ribbon to pom.xml
+	- @RibbonClient("spring-boot-app-name"): put on Feign-Proxy
+	- application.properties: Naming server url to find all the servers(For service discovery) to be load-balanced
+		- eureka.client.service-url.default-zone=http://localhost:8761/eureka
+
+Netflix-Zuul: API Gateway Server
+	- 
+		
 		
 	
 	
