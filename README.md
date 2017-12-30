@@ -206,11 +206,15 @@ Netflix-Eureka: Service Registry & Discovery
 	- Eureka Naming Server
 		- New Spring Boot Application having Eureka-Naming-Server dependency
 		- @EnableEurekaServer
+		- application.properties: server will nor register itself
+			- eureka.client.register-with-eureka=false
+			- eureka.client.fetch-registry=false
 	- Eureka Naming Client
-		- Add Eureka-Naming-client dependency to microservice you want to register with Eureka-server
-		- @EnableDiscoveryClient: Add this annotation to SpringBootApplication class
-		- application.properties: Add eureka server End Point
-			- eureka.client.service-url.default-zone=http://localhost:8761/eureka
+		- Add dependency: spring-cloud-starter-netflix-eureka-client
+		- application.properties: Add eureka server End Point (Default port: 8761)
+			- eureka.client.service-url.defaultZone=http://localhost:8010/eureka
+		- @EnableEurekaClient: Add this annotation to SpringBootApplication class
+		
 
 Netflix-Ribbon (Works with Feign): Makes easy to invoke other REST services
 
