@@ -290,3 +290,9 @@ Distributed Logging Architecture for Microservices
 	- Correlation ID: generate unique id and pass across all the microservices invoked for single request
 		- Spring cloud Sleuth
 		
+# References:
+
+	- HTTP PUT, PATCH or POST - Partial updates or full replacement?
+		http://soabits.blogspot.dk/2013/01/http-put-patch-or-post-partial-updates.html
+	- 
+		
