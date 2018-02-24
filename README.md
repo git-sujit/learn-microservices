@@ -289,10 +289,37 @@ Distributed Logging Architecture for Microservices
 		- So, we should send all the generated logs across the hosts to an external, centralized place (Kafka/RabbitMQ)
 	- Correlation ID: generate unique id and pass across all the microservices invoked for single request
 		- Spring cloud Sleuth
+
+# JPA:
+
+	- One-To-Many establishment between Product & ProductCategory
+		- One category - Many products
+		- Both MappedBy & JoinColumn will refer to the same column in Product table
+		- Product bean: JoinColumn will be the name of Column in Product table
+			@ManyToOne(fetch = FetchType.EAGER)
+			@JoinColumn(name = "productCategory", nullable = true)
+			private CnProductCategory productCategory;
+		- ProductCategory bean: mapped by is the name of column in Product table
+			@OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+			private Set<CnProduct> products;
+# Liquibase
+
+	- Database migration tool
+	- Write your schema and data agnostic of database
+	- help you create the schema, run them during deployment and also help you write automated 
+		tests so that you are confident that your changes will work in production
+	- Spring-boot provides the support for both Flyway and Liquibase out of the box.
+	- Pom dependency: <artifactId>liquibase-core</artifactId>
+	- 
 		
 # References:
 
+	- Custom ID generator
+		https://vladmihalcea.com/how-to-implement-a-custom-string-based-sequence-identifier-generator-with-hibernate/
 	- HTTP PUT, PATCH or POST - Partial updates or full replacement?
 		http://soabits.blogspot.dk/2013/01/http-put-patch-or-post-partial-updates.html
+	- Spring security 
+		https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
+		https://github.com/TechPrimers/spring-security-db-example.git
 	- 
 		
