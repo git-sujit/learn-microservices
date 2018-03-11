@@ -29,7 +29,7 @@ Steps:
 	- Return ResponseEntity	
 	- Request/Response validation
 		- javax.validation / hibernate.validation package
-HATEOS: Hypermedia as The Engine of Application State
+HATEOAS: Hypermedia as The Engine of Application State
 
 	- To pass additional data/metadat in the REST response
 	- e.g: returning additional/useful information/links in the response
